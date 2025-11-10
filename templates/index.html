@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotDoc Clinic Scraper</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HotDoc Clinic Scraper</h1>
+            <p class="subtitle">Professional Data Extraction Suite</p>
+        </header>
+
+        <!-- Configuration Panel -->
+        <section class="config-panel">
+            <h2>Configuration</h2>
+
+            <div class="form-group">
+                <label>Fields to Extract:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox">
+                        <input type="checkbox" name="field" value="name" checked>
+                        <span>Name</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="field" value="address" checked>
+                        <span>Address</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="field" value="phone" checked>
+                        <span>Phone</span>
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="field" value="website" checked>
+                        <span>Website</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Scraping Range:</label>
+                <div class="range-inputs">
+                    <div class="range-input">
+                        <label for="startRange">Start:</label>
+                        <input type="number" id="startRange" name="startRange" min="1" value="1" placeholder="Start from">
+                    </div>
+                    <div class="range-input">
+                        <label for="endRange">End:</label>
+                        <input type="number" id="endRange" name="endRange" min="1" value="10" placeholder="End at">
+                    </div>
+                </div>
+                <small class="range-hint">Example: Start=1, End=10 scrapes first 10 clinics. Start=11, End=20 scrapes next 10.</small>
+            </div>
+
+            <div class="controls">
+                <button id="startBtn" class="btn btn-primary">Start Scraping</button>
+                <button id="stopBtn" class="btn btn-danger" disabled>Stop</button>
+                <button id="downloadBtn" class="btn btn-success" disabled>Download CSV</button>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="progress-section">
+            <div class="progress-header">
+                <h2>Progress</h2>
+                <span id="statusBadge" class="status-badge idle">Idle</span>
+            </div>
+
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+            </div>
+
+            <div class="progress-stats">
+                <span id="progressText">0/0 (0%)</span>
+                <span id="currentAction">Ready to start</span>
+            </div>
+        </section>
+
+        <!-- Live Log -->
+        <section class="log-section">
+            <h2>Live Log</h2>
+            <div id="logContainer" class="log-container">
+                <div class="log-entry log-info">Waiting to start...</div>
+            </div>
+        </section>
+
+        <!-- Results Preview -->
+        <section class="results-section">
+            <div class="results-header">
+                <h2>Results Preview <span id="resultCount">(0 clinics)</span></h2>
+                <label class="filter-toggle">
+                    <input type="checkbox" id="filterNoWebsite">
+                    <span>Only show clinics without a website</span>
+                </label>
+            </div>
+            <div class="table-container">
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Website</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody">
+                        <tr>
+                            <td colspan="5" class="empty-state">No results yet. Start scraping to see data.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination" id="pagination">
+                <button class="pagination-btn" id="prevPage" disabled>&laquo; Previous</button>
+                <span class="pagination-info" id="paginationInfo">Page 1 of 1</span>
+                <button class="pagination-btn" id="nextPage" disabled>Next &raquo;</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
