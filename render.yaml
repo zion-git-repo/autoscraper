@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: hotdoc-scraper
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: |
+      pip install -r requirements-deploy.txt
+      apt-get update && apt-get install -y chromium chromium-driver
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0

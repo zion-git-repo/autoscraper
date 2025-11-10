@@ -198,7 +198,9 @@ def stream():
 
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5005))
     print("🚀 Starting HotDoc Clinic Scraper...")
-    print("📍 Open your browser to: http://localhost:5005")
-    print("    (Note: Changed from port 5000 to 5005 due to macOS conflict)")
-    app.run(debug=True, threaded=True, host='0.0.0.0', port=5005)
+    print(f"📍 Open your browser to: http://localhost:{port}")
+    if port == 5005:
+        print("    (Note: Changed from port 5000 to 5005 due to macOS conflict)")
+    app.run(debug=True, threaded=True, host='0.0.0.0', port=port)

@@ -29,13 +29,19 @@ class ClinicScraper:
         """Initialize Selenium WebDriver"""
         if self.driver is None:
             self.log('Setting up headless browser...')
-            chrome_options = Options()
-            chrome_options.add_argument('--headless=new')
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            chrome_options.add_argument('--disable-gpu')
-            chrome_options.add_argument('--window-size=1920,1080')
-            chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
+
+            try:
+                from scraper_config import get_chrome_options
+                chrome_options = get_chrome_options()
+            except ImportError:
+                # Fallback to default options if config not available
+                chrome_options = Options()
+                chrome_options.add_argument('--headless=new')
+                chrome_options.add_argument('--no-sandbox')
+                chrome_options.add_argument('--disable-dev-shm-usage')
+                chrome_options.add_argument('--disable-gpu')
+                chrome_options.add_argument('--window-size=1920,1080')
+                chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
 
             try:
                 self.driver = webdriver.Chrome(options=chrome_options)
